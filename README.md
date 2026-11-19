@@ -1,6 +1,6 @@
 # IoT events with Apache Kafka — TBDM Module 5
 
-This lab turns the IoT JSON Lines dataset from the earlier NoSQL lab into a small, repeatable event stream. You will publish events to Kafka, inspect their keys, partitions and offsets, and run two independent consumer groups. No MQTT broker or live sensor is required.
+This lab turns the IoT JSON Lines dataset from the earlier NoSQL lab into a small, repeatable event stream. You will publish events to Kafka, inspect their keys, partitions and offsets, and run two independent consumer groups.
 
 ## What you need
 
