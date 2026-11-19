@@ -25,5 +25,34 @@ services:
       CLUSTER_ID: "4L6g3nShT-eMCtK--X86sw"
       KAFKA_LOG_DIRS: "/var/lib/kafka/data"
 
+  # Optional streaming lab: start with docker compose --profile streaming up -d.
+  ksqldb-server:
+    image: confluentinc/cp-ksqldb-server:8.1.6
+    profiles: [streaming]
+    depends_on:
+      - kafka
+    ports:
+      - "127.0.0.1:8088:8088"
+    environment:
+      KSQL_BOOTSTRAP_SERVERS: "kafka:19092"
+      KSQL_HOST_NAME: "ksqldb-server"
+      KSQL_LISTENERS: "http://0.0.0.0:8088"
+      KSQL_KSQL_SERVICE_ID: "tbdm_lab_"
+      KSQL_KSQL_STREAMS_REPLICATION_FACTOR: 1
+      KSQL_KSQL_INTERNAL_TOPIC_REPLICAS: 1
+      KSQL_KSQL_SINK_REPLICAS: 1
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_REPLICATION_FACTOR: 1
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+      KSQL_CACHE_MAX_BYTES_BUFFERING: 0
+
+  ksqldb-cli:
+    image: confluentinc/cp-ksqldb-server:8.1.6
+    profiles: [streaming]
+    depends_on:
+      - ksqldb-server
+    entrypoint: ["/bin/sh"]
+    stdin_open: true
+    tty: true
+
 volumes:
   kafka_data:
